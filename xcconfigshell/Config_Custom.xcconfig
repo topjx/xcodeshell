@@ -1,0 +1,49 @@
+//
+//  Config_Custom.xcconfig
+//  xcconfigshell
+//
+//  Created by tc on 2023/9/11.
+//
+
+// Configuration settings file format documentation can be found at:
+// https://help.apple.com/xcode/#/dev745c5c974
+
+NAME = 'LIIIIIIII'
+
+CUSTOM_SCRIPT = echo $(NAME)
+
+
+
+//在xcconfig文件中，只有一种注释方式 \\
+
+
+//在给Configuration配置xcconfig文件的时候，只能选择其中一个xcconfig文件。但是作为一个成熟的开发者，我们是有抽离和封装的思维的，对于一些公用的环境变量，我们习惯于去把它们抽离到单独的一个xcconfig文件中；或者可以根据功能将环境变量分配到不同的config文件中。也就是说，我们可以在Xcode工程中创建多个xcconfig文件，当需要在一个xcconfig文件中去使用另外一个xcconfig文件的内容的时候，就可以通过include关键字来导入其他xcconfig文件内的配置，其具体语法如下：
+//
+//#include “Debug.config”
+//复制
+//在搜索导入的文件的时候，如果是以/开头，那么就代表绝对路径，例如：
+//
+//#include “/Users/liwei/Desktop/Xcode/NormanTarget/Config.xcconfig”
+//复制
+//也可以通过相对路径来搜索，相对路径是相对${SRCROOT}路径的：
+//
+//#include “NormanTarget/Config.xcconfig”
+//复制
+//6，可以在代码中去使用定义的环境变量吗？答案是可以的，但是不能直接使用，可以通过info.plist文件来做一层中间的传递，具体操作如下：
+//
+//在info.plist中新增一个键值对，然后value设置为某个环境变量
+//在代码中拿到info.plist并将其转换成Dictionary，然后通过上一步新增的键值对的key进行取值即可。
+//接下来说一个我们在实际开发中的简单应用场景，在Xcode工程运行的时候执行一段脚本，这段脚本中需要使用到定义的环境变量，该场景的实现步骤如下：
+//
+//①在Build Settings或者xcconfig文件中定义需要使用的环境变量，如下：
+//
+//NAME = 'LIIIIIIII'
+//
+//CUSTOM_SCRIPT = echo $(NAME)
+
+//② 在Xcode中去执行对应的脚本，并将输出结果重定向到某一指定终端，如下：
+// Run Script
+// $(CUSTOM_SCRIPT) 1>/dev/ttys001
+
+
+

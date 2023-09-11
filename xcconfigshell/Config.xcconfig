@@ -1,0 +1,29 @@
+//
+//  Config.xcconfig
+//  xcconfigshell
+//
+//  Created by tc on 2023/9/11.
+//
+
+// Configuration settings file format documentation can be found at:
+// https://help.apple.com/xcode/#/dev745c5c974
+
+#include "Config_Custom.xcconfig"
+
+TTY = /dev/ttys001 // 所要输出到的终端地址
+MACHO_PATH = ${BUILD_DIR}/${CONFIGURATION}${EFFECTIVE_PLATFORM_NAME}/${PRODUCT_NAME}${WRAPPER_SUFFIX}/${PRODUCT_NAME} // 二进制可执行文件的完整路径
+CMD = nm ${MACHO_PATH} // 查看二进制可执行文件的符号表信息
+
+//可以看到，该Shell脚本使用到了三个环境变量：VERBOSE_SCRIPT_LOGGING、TTY和CMD。
+
+//该脚本文件的作用就是，将CMD命令执行过程中出现的各种问题过程给打印出来。
+
+
+
+//在xcconfig文件中配置相关环境变量
+//这里需要说明的一点是，如果我们不知道某一个数据所对应的环境变量存不存在，那么可以首先在工程根目录（${SRCROOT}）下执行如下指令来查看Build Settings中的各个环境变量：
+//xcodebuild -project xcconfigshell.xcodeproj -target xcconfigshell -showBuildSettings -json
+
+
+// 在project info  Configurations中指定引用
+// target中的引用优先级更高
